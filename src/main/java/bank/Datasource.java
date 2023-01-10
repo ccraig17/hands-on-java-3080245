@@ -21,7 +21,7 @@ public class Datasource {
     return connection;
   }
   public static Customer getCustomer(String username){
-    String sql = "Select * From Customer Where username = ";
+    String sql = "Select * From Customers Where username =? ";
     Customer customer = null;
     try(Connection connection = connect();
         PreparedStatement statement = connection.prepareStatement(sql)){
@@ -32,7 +32,8 @@ public class Datasource {
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("username"),
-                       sql, resultSet.getInt("account_id")
+                        resultSet.getString("password"),
+                        resultSet.getInt("account_id")
                                       );
            }
         }catch(SQLException e){
@@ -40,14 +41,32 @@ public class Datasource {
         }
         return customer;
   }
+  public static Accounts getAccount(int accountId ){
+    String sql = "Select * From Accounts Where account_Id = ?";
+    Accounts account = null;
+    try(Connection connection = connect(); 
+        PreparedStatement statement = connection.prepareStatement(sql)){
 
+          statement.setInt(1, accountId);
+          try(ResultSet resultSet = statement.executeQuery()){
+                 account = new Accounts(
+                            resultSet.getInt("id"),
+                            resultSet.getString("type"),
+                            resultSet.getDouble("balance")
+                 );
+          }
 
-
+        }catch(SQLException e){
+          e.printStackTrace();
+        }
+        return account;
+  }
 
   public static void main(String[] args) {
-
+  
     Customer customer = getCustomer("twest8o@friendfeed.com");
-  System.out.println(customer.getId());
+    Accounts account = getAccount(customer.getAccount_id());
+    System.out.println(customer.getName());
   }
   
   
