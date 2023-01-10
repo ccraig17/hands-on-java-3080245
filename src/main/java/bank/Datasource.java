@@ -41,19 +41,19 @@ public class Datasource {
         }
         return customer;
   }
-  public static Accounts getAccount(int accountId ){
-    String sql = "Select * From Accounts Where account_Id = ?";
-    Accounts account = null;
+  public static Account getAccount(int accountId){
+    String sql = "Select * From Accounts Where id = ?";
+    Account account = null;
     try(Connection connection = connect(); 
         PreparedStatement statement = connection.prepareStatement(sql)){
-
           statement.setInt(1, accountId);
+          
           try(ResultSet resultSet = statement.executeQuery()){
-                 account = new Accounts(
+                 account = new Account(
                             resultSet.getInt("id"),
                             resultSet.getString("type"),
                             resultSet.getDouble("balance")
-                 );
+                           );
           }
 
         }catch(SQLException e){
@@ -65,10 +65,8 @@ public class Datasource {
   public static void main(String[] args) {
   
     Customer customer = getCustomer("twest8o@friendfeed.com");
-    Accounts account = getAccount(customer.getAccount_id());
-    System.out.println(customer.getName());
+    Account account = getAccount(customer.getAccount_id());
+    System.out.println(account.getBalance());
   }
-  
-  
   
 }
