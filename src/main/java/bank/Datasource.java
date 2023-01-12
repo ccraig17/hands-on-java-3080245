@@ -61,12 +61,7 @@ public class Datasource {
         }
         return account;
   }
-
-  public static void main(String[] args) {
-  
-    Customer customer = getCustomer("twest8o@friendfeed.com");
-    Account account = getAccount(customer.getAccount_id());
-    System.out.println(account.getBalance());
+  public static void updateAccount(){
+    
   }
-  
 }
