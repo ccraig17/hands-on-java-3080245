@@ -13,7 +13,8 @@ public class Menu {
   public static void main(String[] args) {
     System.out.println("Welcome to Globe Bank International!");
 
-    Menu menu = new Menu(); //a menu object is initialize in order to create a Scanner Obj for the Menu Class
+    Menu menu = new Menu(); // a menu object is initialize in order to create a Scanner Obj for the Menu
+                            // Class
     menu.scanner = new Scanner(System.in);
     Customer customer = menu.authenicateUser(); // uses the authenicated Method to verfiy customer
     if (customer != null) { // if the customer is not equal to null, we can get use the Datasource
@@ -42,11 +43,12 @@ public class Menu {
     return customer;
   }
 
-  private void showMenu(Customer customer, Account account){
-    int selection = 0; //keeps track of user selection; initially set to zero.
+  private void showMenu(Customer customer, Account account) {
+    int selection = 0; // keeps track of user selection; initially set to zero.
 
-    // this loop run once the selection is not 4(to exit) and the user(customer)isAuthenicated
-    while (selection != 4 && customer.isAuthenicated()) { 
+    // this loop run once the selection is not 4(to exit) and the
+    // user(customer)isAuthenicated
+    while (selection != 4 && customer.isAuthenicated()) {
       System.out.println("============================================");
       System.out.println("Please select one of the following options: "
           + "\n 1: Deposit"
@@ -58,39 +60,43 @@ public class Menu {
       selection = scanner.nextInt();
       double amount;
 
-      switch(selection){
+      switch (selection) {
         case 1:
           System.out.println("How much would you like to deposit?");
           amount = scanner.nextDouble();
           try {
             account.deposit(amount);
-          //method to update the database
+            // method to update the database
           } catch (AmountException e) {
             System.out.println(e.getMessage());
             System.out.println("Please try again");
           }
-          
           break;
 
-        case 2: 
+        case 2:
           System.out.println("How much would you like to withdraw?");
           amount = scanner.nextDouble();
-          account.withdraw(amount);
-          //method to update the database
+          try {
+            account.withdraw(amount);
+            // method to update the database
+          } catch (AmountException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Please try again.");
+          }
           break;
 
         case 3:
           System.out.println("Current balance is: " + account.getBalance());
-        break;
+          break;
 
         case 4:
           Authenticator.logout(customer);
           System.out.println("Thanks for banking at Globe Bank International");
-        break;
+          break;
 
         default:
           System.out.println("Invalid option. Please try again");
-        break;
+          break;
       }
     }
   }
