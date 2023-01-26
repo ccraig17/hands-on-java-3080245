@@ -67,6 +67,7 @@ public class Menu {
           try {
             account.deposit(amount);
             // method to update the database
+            
           } catch (AmountException e) {
             System.out.println(e.getMessage());
             System.out.println("Please try again");
