@@ -4,7 +4,7 @@ import javax.security.auth.login.LoginException;
 
 public class Authenticator {
 
-  
+
   public static Customer login(String username, String password) throws LoginException{
     Customer customer = Datasource.getCustomer(username);
     if(customer == null){
